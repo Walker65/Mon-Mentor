@@ -8,7 +8,10 @@ import Footer from "./components/Footer";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
-
+import Profil from "./pages/Profil";
+import Mentor from "./pages/Mentor";
+import Utilisateur from "./pages/Utilisateur";
+import Logout from "./pages/Logout";
 function App() {
   return (
     <Router>
@@ -19,6 +22,10 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
+            <Route path="/profil" element={<Profil />} />
+            <Route path="/mentor" element={<Mentor />} />
+            <Route path="/utilisateur" element={<Utilisateur />} />
+            <Route path="/logout" element={<Logout />} />
           </Routes>
         </main>
         <Footer />
