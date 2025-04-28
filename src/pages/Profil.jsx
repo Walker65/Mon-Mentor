@@ -3,20 +3,21 @@ import { Link } from 'react-router-dom';
 import { getUserData } from "../services/authService";
 
 const Profil = () => {
-  const [userName, setUserName] = useState('Mon Mentor'); // Message par défaut
+  const [userName, setUserName] = useState('Mon Mentor');
+  const [showModal, setShowModal] = useState(false); // pour gérer l'ouverture/fermeture de la modale
 
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const user = await getUserData(); // Attendre la récupération des données utilisateur
+        const user = await getUserData();
         if (user && user.firstName && user.lastName) {
           setUserName(`${user.firstName} ${user.lastName}`);
         } else {
-          setUserName('Utilisateur'); // Si aucune donnée utilisateur, message par défaut
+          setUserName('Utilisateur');
         }
       } catch (error) {
         console.error("Erreur lors de la récupération des données utilisateur:", error);
-        setUserName('Utilisateur'); // En cas d'erreur, message par défaut
+        setUserName('Utilisateur');
       }
     };
 
@@ -30,7 +31,7 @@ const Profil = () => {
         Heureux de vous revoir <strong>{userName}</strong>.<br />
       </p>
 
-      {/* Carrousel d'images du mentorat */}
+      {/* Carrousel */}
       <div id="mentorCarousel" className="carousel slide mb-5" data-bs-ride="carousel">
         <div className="carousel-inner">
           <div className="carousel-item active">
@@ -39,9 +40,9 @@ const Profil = () => {
               className="d-block w-100"
               alt="Mentorat 1"
               style={{
-                objectFit: "contain", // Cela permet de maintenir l'image complète
-                height: "300px", // Ajuster la hauteur
-                margin: "auto", // Centrer l'image
+                objectFit: "contain",
+                height: "300px",
+                margin: "auto",
               }}
             />
           </div>
@@ -51,9 +52,9 @@ const Profil = () => {
               className="d-block w-100"
               alt="Mentorat 2"
               style={{
-                objectFit: "contain", // Cela permet de maintenir l'image complète
-                height: "300px", // Ajuster la hauteur
-                margin: "auto", // Centrer l'image
+                objectFit: "contain",
+                height: "300px",
+                margin: "auto",
               }}
             />
           </div>
@@ -63,15 +64,15 @@ const Profil = () => {
               className="d-block w-100"
               alt="Mentorat 3"
               style={{
-                objectFit: "contain", // Cela permet de maintenir l'image complète
-                height: "300px", // Ajuster la hauteur
-                margin: "auto", // Centrer l'image
+                objectFit: "contain",
+                height: "300px",
+                margin: "auto",
               }}
             />
           </div>
         </div>
 
-        {/* Contrôles du carrousel */}
+        {/* Contrôles */}
         <button
           className="carousel-control-prev"
           type="button"
@@ -92,10 +93,14 @@ const Profil = () => {
         </button>
       </div>
 
+      {/* Boutons */}
       <div className="d-flex justify-content-center gap-3 flex-wrap">
-        <Link to="/Utilisateur" className="btn btn-outline-primary btn-lg">
+        <button
+          className="btn btn-outline-primary btn-lg"
+          onClick={() => setShowModal(true)} // ouvrir la modale
+        >
           Mon Profil
-        </Link>
+        </button>
 
         <Link to="/Mentor" className="btn btn-outline-success btn-lg">
           Trouver un Mentor
@@ -105,6 +110,28 @@ const Profil = () => {
           Se Déconnecter
         </Link>
       </div>
+
+      {/* Modal Bootstrap */}
+      {showModal && (
+        <div className="modal fade show d-block" tabIndex="-1" style={{ backgroundColor: 'rgba(0,0,0,0.5)' }}>
+          <div className="modal-dialog">
+            <div className="modal-content">
+              <div className="modal-header">
+                <h5 className="modal-title">Fonctionnalité bientôt disponible</h5>
+                <button type="button" className="btn-close" onClick={() => setShowModal(false)}></button>
+              </div>
+              <div className="modal-body">
+                <p>Cette fonctionnalité sera bientôt disponible !</p>
+              </div>
+              <div className="modal-footer">
+                <button type="button" className="btn btn-secondary" onClick={() => setShowModal(false)}>
+                  Fermer
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
